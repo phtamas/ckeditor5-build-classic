@@ -43,6 +43,7 @@
     "@ckeditor/ckeditor5-table": "^11.0.0",
     "@ckeditor/ckeditor5-theme-lark": "^11.1.0",
     "@ckeditor/ckeditor5-upload": "^10.0.3",
+    "ckeditor5-simple-upload": "^1.0.4",
     "postcss-loader": "^3.0.0",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.23.0",
@@ -65,5 +66,6 @@
   "scripts": {
     "build": "webpack --mode production",
     "preversion": "npm run build; if [ -n \"$(git status src/ckeditor.js build/ --porcelain)\" ]; then git add -u src/ckeditor.js build/ && git commit -m 'Internal: Build.'; fi"
-  }
+  },
+  "dependencies": {}
 }
