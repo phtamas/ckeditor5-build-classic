@@ -1,12 +1,13 @@
 /**
- * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md.
+ * @license Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /* globals document */
 
 import ClassicEditor from '../src/ckeditor';
 import BaseClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+import { describeMemoryUsage, testMemoryUsage } from '@ckeditor/ckeditor5-core/tests/_utils/memory';
 
 describe( 'ClassicEditor build', () => {
 	let editor, editorElement;
@@ -23,7 +24,7 @@ describe( 'ClassicEditor build', () => {
 		editor = null;
 	} );
 
-	describe( 'buid', () => {
+	describe( 'build', () => {
 		it( 'contains plugins', () => {
 			expect( ClassicEditor.builtinPlugins ).to.not.be.empty;
 		} );
@@ -136,7 +137,7 @@ describe( 'ClassicEditor build', () => {
 		} );
 
 		it( 'image works', () => {
-			const data = '<figure class="image"><img src="./manual/sample.jpg"></figure>';
+			const data = '<figure class="image"><img src="/assets/sample.png"></figure>';
 
 			editor.setData( data );
 			expect( editor.getData() ).to.equal( data );
@@ -195,9 +196,15 @@ describe( 'ClassicEditor build', () => {
 				.then( newEditor => {
 					editor = newEditor;
 
-					expect( editor.ui.view.toolbar.items.length ).to.equal( 13 );
+					expect( editor.ui.view.toolbar.items.length ).to.equal( 17 );
 					expect( editor.ui.view.stickyPanel.viewportTopOffset ).to.equal( 42 );
 				} );
 		} );
+	} );
+
+	describeMemoryUsage( () => {
+		testMemoryUsage(
+			'should not grow on multiple create/destroy',
+			() => ClassicEditor.create( document.querySelector( '#mem-editor' ) ) );
 	} );
 } );
